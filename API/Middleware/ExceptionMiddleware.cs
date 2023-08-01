@@ -1,5 +1,4 @@
 ﻿using API.Errors;
-using SQLitePCL;
 using System.Net;
 using System.Text.Json;
 
