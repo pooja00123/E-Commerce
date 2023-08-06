@@ -1,32 +1,25 @@
 <div class="container">
     <div class="row">
-        <section class = "col-3" >
+        <section class="col-3">
             <h5 class="text-warning ms-3">Sort</h5>
             <select class="form-select mb-4" (change)="onSortSelected($event)">
                 <option *ngFor="let sort of sortOptions" [value]="sort.value">
                     {{sort.name}}
-                </option>               
+                </option>
             </select>
             <h5 class="text-warning ms-3">Brands</h5>
             <ul class="list-group my-3">
-                <li class="list-group-item" 
-                *ngFor="let brand of brandList" 
-                [class.active]="brand.id === brandIdSelected"
-                [value]="brand.id"
-                (click)="onBrandSelected(brand.id)"
-                >{{brand.name}}</li>
-              </ul>
-              <h5 class="text-warning ms-3">Types</h5>
-              <ul class="list-group my-3">
-                <li class="list-group-item" 
-                *ngFor="let type of typeList" 
-                [class.active]="type.id === typeIdSelected"
-                [value]="type.id"
-                (click)="onTypeSelected(type.id)"
-                >{{type.name}}</li>
-                </ul>
+                <li class="list-group-item" *ngFor="let brand of brandList"
+                    [class.active]="brand.id === brandIdSelected" [value]="brand.id"
+                    (click)="onBrandSelected(brand.id)">{{brand.name}}</li>
+            </ul>
+            <h5 class="text-warning ms-3">Types</h5>
+            <ul class="list-group my-3">
+                <li class="list-group-item" *ngFor="let type of typeList" [class.active]="type.id === typeIdSelected"
+                    [value]="type.id" (click)="onTypeSelected(type.id)">{{type.name}}</li>
+            </ul>
         </section>
-        <section class = "col-9" >
+        <section class="col-9">
             <div class="d-flex justify-content-between align-items-center pb-2">
                 <header>
                     <span>Showing <strong>10</strong> of <strong>{{totalCount}}</strong> Results</span>
@@ -37,11 +30,17 @@
                     <button class="btn btn-outline-secondary mx-2">Reset</button>
                 </div>
             </div>
-            <div class="row row-cols-3 g-3">
+            <div class="row row-cols-3 g-3 mb-4">
                 <div class="col" *ngFor="let product of productList">
                     <app-product-item [product]="product"></app-product-item>
                 </div>
             </div>
+            <div class="d-flex justify-content-center">
+                <pagination [boundaryLinks]="true" [totalItems]="77" previousText="&lsaquo;" nextText="&rsaquo;"
+                firstText="&laquo;" lastText="&raquo;">
+            </pagination>
+            </div>
+            
         </section>
     </div>
 </div>
