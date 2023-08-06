@@ -10,10 +10,11 @@ import { Product } from '../shared/models/product';
 export class ShopComponent implements OnInit{
 
   productList : Product[] = [];
+  totalCount : number = 0;
   constructor(private shopService : ShopService) { }
   ngOnInit(): void {
     this.shopService.getProducts().subscribe({
-      next : response => {this.productList = response.data},
+      next : response => {this.productList = response.data, this.totalCount = response.count},
       error : error => console.log(error)
     })
   }
