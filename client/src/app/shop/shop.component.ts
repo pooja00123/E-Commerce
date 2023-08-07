@@ -3,6 +3,7 @@ import { ShopService } from './shop.service';
 import { Product } from '../shared/models/product';
 import { Brand } from '../shared/models/brand';
 import { Type } from '../shared/models/type';
+import { ShopParams } from '../shared/models/shopParams';
 
 @Component({
   selector: 'app-shop',
@@ -14,16 +15,14 @@ export class ShopComponent implements OnInit{
   productList : Product[] = [];
   brandList : Brand[] = [];
   typeList : Type[] = [];
-  totalCount : number = 0;
-  brandIdSelected : number = 0;
-  typeIdSelected : number = 0;
-  
+  totalCount = 0;
+  shopParams = new ShopParams();
   sortOptions = [
     {name: 'Alphabetical', value: 'name'},
     {name: 'Price: Low to High', value: 'priceAsc'},
     {name: 'Price High to Low', value: 'priceDesc'}
   ]
-  sortSelected : string = this.sortOptions[0].value;
+
   
   constructor(private shopService : ShopService) { }
   ngOnInit(): void {
@@ -33,8 +32,13 @@ export class ShopComponent implements OnInit{
   }
 
   getProducts(){
-    this.shopService.getProducts(this.brandIdSelected, this.typeIdSelected, this.sortSelected).subscribe({
-      next : response => {this.productList = response.data, this.totalCount = response.count},
+    this.shopService.getProducts(this.shopParams).subscribe({
+      next : response => {
+        this.productList = response.data,
+        this.totalCount = response.count,
+        this.shopParams.pageNumber = response.pageIndex,
+        this.shopParams.pageSize = response.pagesize
+      },
       error : error => console.log(error)
     })
   }
@@ -51,16 +55,23 @@ export class ShopComponent implements OnInit{
     })
   }
   onBrandSelected(brandId : number){
-    this.brandIdSelected = brandId;
+    this.shopParams.brandId= brandId;
     this.getProducts();
   }
   onTypeSelected(typeId : number){
-    this.typeIdSelected = typeId;
+    this.shopParams.typeId = typeId;
     this.getProducts();
   }
   onSortSelected(event : any){
-    this.sortSelected = event.target.value;
+    this.shopParams.sort = event.target.value;
     this.getProducts();
+  }
+
+  onPageChanged(event : any){
+    if(this.shopParams.pageNumber !== event){
+      this.shopParams.pageNumber = event;
+      this.getProducts();
+    }
   }
 
 }
