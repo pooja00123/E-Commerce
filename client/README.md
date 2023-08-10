@@ -25,3 +25,15 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+# To install toastr
+
+Run command - npm install ngx-toastr
+
+# To generate a component without test file
+
+ng g c <component name> --skip-tests
+
+# To dry run command, it will not make any actual changes to the project. Will just do a dry run of command.  
+
+ng g c <component name> --dry-run
