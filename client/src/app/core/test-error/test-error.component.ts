@@ -8,9 +8,9 @@ import { TestErrorService } from './test-error.service';
   styleUrls: ['./test-error.component.css']
 })
 export class TestErrorComponent {
-  constructor(private errorService : TestErrorService){
-    //this.get404();
-  }
+
+  validationErrors : string[] = [];
+  constructor(private errorService : TestErrorService){}
 
   get404(){
     this.errorService.get404Error().subscribe({
@@ -39,7 +39,10 @@ export class TestErrorComponent {
   get400Validation(){
     this.errorService.get400ValidationError().subscribe({
       next : response => console.log(response),
-        error: error => console.log(error)      
+        error: error => {
+          console.log(error),
+          this.validationErrors = error.errors;
+        }     
       })
   }
 }
