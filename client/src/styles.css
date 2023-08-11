@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+/*We have to write this style code in global style.css file because sometimes the styling
+done in particular component's css file does not override the atual styling of these third party lib. 
+Here we are using this style for breadcrumb which is a third party library.*/
+
+label.xng-breadcrumb-trail{
+    color: orange;
+}

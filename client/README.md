@@ -30,6 +30,12 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 Run command - npm install ngx-toastr
 
+# To install breadcrumb
+
+Run command - npm install xng-breadcrumb
+# Use -
+Import breadcrumb module in the module.ts you are using it then directly use <xng-breadcrumb></xng-breadcrumb> in .html file where you want to use.
+
 # To generate a component without test file
 
 ng g c <component name> --skip-tests
