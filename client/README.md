@@ -36,6 +36,12 @@ Run command - npm install xng-breadcrumb
 # Use -
 Import breadcrumb module in the module.ts you are using it then directly use <xng-breadcrumb></xng-breadcrumb> in .html file where you want to use.
 
+# To install bootswatch
+
+Run command - npm install bootswatch
+# Use -
+To easily change theme
+
 # To generate a component without test file
 
 ng g c <component name> --skip-tests
