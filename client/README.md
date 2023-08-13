@@ -42,6 +42,12 @@ Run command - npm install bootswatch
 # Use -
 To easily change theme
 
+# To install spinner/loader
+
+Run command - npm install ngx-spinner
+# Use -
+To show loading on UI while API gets data.
+
 # To generate a component without test file
 
 ng g c <component name> --skip-tests

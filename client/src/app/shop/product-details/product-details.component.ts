@@ -13,7 +13,12 @@ export class ProductDetailsComponent implements OnInit {
   product?: Product;
 
   constructor(private shopservice : ShopService, private activatedRoute: ActivatedRoute,
-    private bcService: BreadcrumbService){}
+    private bcService: BreadcrumbService){
+      //Setting product details as empty string here so that before loading of the product
+      // after clicking "view" on product we do not see name of the old product. If we do not 
+      // set this to empty string than we will see name of previous product on top.  
+      this.bcService.set('@productDetails', '')
+    }
   ngOnInit(): void {
     this.loadProduct();
   }
