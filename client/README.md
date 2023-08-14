@@ -48,6 +48,8 @@ Run command - npm install ngx-spinner
 # Use -
 To show loading on UI while API gets data.
 
+# To use Redis we need to install StackExchange.Redis nuget package
+
 # To generate a component without test file
 
 ng g c <component name> --skip-tests
