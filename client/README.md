@@ -50,6 +50,11 @@ To show loading on UI while API gets data.
 
 # To use Redis we need to install StackExchange.Redis nuget package
 
+# To install cuid
+
+npm install cuid
+It is used to genertate uniques strings, here we need to generate unique string type id for each basket.
+
 # To generate a component without test file
 
 ng g c <component name> --skip-tests
