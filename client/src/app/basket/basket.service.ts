@@ -39,11 +39,13 @@ export class BasketService {
     return this.basketSource.value;
   }
 
-  addItemToBasket(item: Product, quantity =1){
-    const itemToAdd = this.mapProductItemtobasketItem(item);
+  addItemToBasket(item: Product | BasketItem, quantity =1){    
+    if(this.isProduct(item)){
+      item = this.mapProductItemtobasketItem(item);
+    }    
     // If current basket value is null then we have to create a basket.
     const basket = this.getCurrentBasketValue() ?? this.createBasket();
-    basket.items = this.addorUpdateItem(basket.items, itemToAdd, quantity);
+    basket.items = this.addorUpdateItem(basket.items, item, quantity);
     this.setBasket(basket);
   }
 
@@ -55,6 +57,30 @@ export class BasketService {
       items.push(itemToAdd);
     }
     return items;
+  }
+ 
+  removeItemFromBasket(id: number, quantity =1){
+    const basket = this.getCurrentBasketValue();
+    if(!basket) return;
+    const item = basket.items.find(x => x.id === id);
+    if(item){
+      item.quantity -= quantity;
+      if(item.quantity === 0){
+        basket.items = basket.items.filter(x => x.id !== id);
+      }
+      if(basket.items.length > 0) this.setBasket(basket);
+      else this.deleteBasket(basket);
+    }
+  }
+  
+  deleteBasket(basket: Basket) {
+    return this.http.delete(this.baseUrl + 'basket?id' + basket.id).subscribe({
+      next: () => {
+        this.basketSource.next(null);
+        this.basketTotalSource.next(null);
+        localStorage.removeItem('basket_id');
+      }
+    })
   }
 
   private createBasket(): Basket {
@@ -84,5 +110,10 @@ export class BasketService {
     const subtotal = basket.items.reduce((a,b) => (b.price * b.quantity) + a, 0);
     const total = subtotal + shipping;
     this.basketTotalSource.next({shipping, total, subtotal});
+  }
+
+  // Function to check if the item is product or basketItem using Type Guard
+  private isProduct(item: Product | BasketItem) : item is Product {
+    return (item as Product).productBrand !== undefined;
   }
 }

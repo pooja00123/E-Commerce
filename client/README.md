@@ -79,3 +79,7 @@ ng g c <component name> --skip-tests
 # To dry run command, it will not make any actual changes to the project. Will just do a dry run of command.  
 
 ng g c <component name> --dry-run
+
+# Behavior Subject
+
+BehaviorSubject is a type of subject, a special type of observable in RxJS, that keeps track of the current value and emits it to new subscribers. In this we can have multiple subscribers that listens to it when its value gets updated.
