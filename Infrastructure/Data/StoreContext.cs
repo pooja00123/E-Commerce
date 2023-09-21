@@ -21,7 +21,7 @@ namespace Infrastructure.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-            //To convert price decimal into double as SQLte does not support decimal types.
+            //To convert price decimal into double as SQLite does not support decimal types.
             if (Database.ProviderName == "Microsoft.EntityFrameworkCore.Sqlite") 
             {
                 foreach (var entityType in modelBuilder.Model.GetEntityTypes())

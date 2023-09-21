@@ -30,6 +30,11 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseCors("CorsPolicy");
+
+// Authentication middleware should always come before Authorization because
+// We can only authorize(to check if they have rights to access particular resource)
+// someone when we know who they are by authenticating them.
+
 app.UseAuthentication();
 app.UseAuthorization();
 
