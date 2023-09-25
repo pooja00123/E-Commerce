@@ -2,8 +2,10 @@
 using API.Errors;
 using Core.Entities.Identity;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -14,7 +16,7 @@ namespace API.Controllers
         private readonly ITokenService tokenService;
 
         public AccountController(
-            UserManager<AppUser> userManager ,
+            UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             ITokenService tokenService)
         {
@@ -22,6 +24,36 @@ namespace API.Controllers
             this.signInManager = signInManager;
             this.tokenService = tokenService;
         }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<UserDto>> GetCurrentUser()
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var user = await userManager.FindByEmailAsync(email);
+            return new UserDto
+            {
+                DisplayName = user.DisplayName,
+                Email = user.Email,
+                Token = tokenService.CreateToken(user)
+            };
+        }
+
+        [HttpGet("emailexists")]
+        public async Task<ActionResult<bool>> CheckEmailExistsAsync([FromQuery] string email)
+        {
+            return await userManager.FindByEmailAsync(email) != null;
+        }
+
+        [HttpGet("address")]
+        [Authorize]
+        public async Task<ActionResult<Address>> GetUserAddress()
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var user = await userManager.FindByEmailAsync(email);
+            return user.Address;
+        }
+
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         { 
